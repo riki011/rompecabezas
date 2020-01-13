@@ -86,25 +86,24 @@ Se te ocurre cómo solucionar esto con una variable temporal?
 */
 function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPos2) {
     //COMPLETAR
-    // var pieza1 =  grilla[filaPos1][columnaPos1];
-    // var pieza2= grilla[filaPos2][columnaPos2];
-    
-    //  grilla[filaPos1][columnaPos1]= pieza2;
+    var pieza1 =  grilla[filaPos1][columnaPos1];
+    var pieza2= grilla[filaPos2][columnaPos2];
+     grilla[filaPos1][columnaPos1]= pieza2;
 
-    //  grilla[filaPos2][columnaPos2] = pieza1;
-    
-    var pos1;
-  var pos2;
-  var temp = grilla[filaPos1][columnaPos1];
+     grilla[filaPos2][columnaPos2] = pieza1;
 
-  pos1 = grilla[filaPos1][columnaPos1];
-  pos2 = grilla[filaPos2][columnaPos2];
+  //   var pos1;
+  // var pos2;
+  // var temp = grilla[filaPos1][columnaPos1];
 
-  pos1 = pos2;
-  pos2 = temp;
+  // pos1 = grilla[filaPos1][columnaPos1];
+  // pos2 = grilla[filaPos2][columnaPos2];
 
-  grilla[filaPos1][columnaPos1] = pos1;
-  grilla[filaPos2][columnaPos2] = pos2;
+  // pos1 = pos2;
+  // pos2 = temp;
+
+  // grilla[filaPos1][columnaPos1] = pos1;
+  // grilla[filaPos2][columnaPos2] = pos2;
 
 }
 
@@ -113,7 +112,7 @@ function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPo
 function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
     //COMPLETAR
     filaVacia = nuevaFila;
- columnaVacia = nuevaColumna;
+   columnaVacia = nuevaColumna;
 
 }
 
@@ -121,21 +120,21 @@ function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
 // Para chequear si la posicón está dentro de la grilla.
 function posicionValida(fila, columna) {
     //COMPLETAR
+    var valido  = true;
     
-    var valido= true;
-    var posFila=fila;
-    var posCol=columna;
-    
-    if(posFila>2 || posCol>2)
+    var posFila = fila -1 ;
+    var posCol  = columna -1 ;
+  
+    if(posFila > 2 || posCol > 2)
     {
       valido=false;
     }
-    else (posFila<0 || posCol<0)
+    else if(posFila < 0 || posCol < 0)
     {
       valido=false;
     }
 
-    return valido ; 
+    return valido; 
     
 }
 
@@ -177,15 +176,14 @@ function moverEnDireccion(direccion) {
   Para que esta parte del código funcione correctamente deberás haber implementado 
   las funciones posicionValida, intercambiarPosicionesGrilla y actualizarPosicionVacia */
 
-    if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
-        intercambiarPosiciones(filaVacia, columnaVacia, nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
-        actualizarPosicionVacia(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
+  if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
+    intercambiarPosiciones(filaVacia, columnaVacia, nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
+    actualizarPosicionVacia(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
 
-  //COMPLETAR: Agregar la dirección del movimiento al arreglo de movimiento
+    //COMPLETAR: Agregar la dirección del movimiento al arreglo de movimiento
+    nuevoMovimiento(direccion);
 
-     nuevoMovimiento(direccion);
-
-}
+  }
 
 }
 
@@ -222,13 +220,16 @@ var codigosDireccion = {
 el intercambio en la pantalla (DOM). Para que funcione debera estar implementada
 la funcion intercambiarPosicionesGrilla() */
 function intercambiarPosiciones(fila1, columna1, fila2, columna2) {
+  fila1 = fila1 - 1;
+  columna1 = columna1 - 1;
+  fila2 = fila2 -1;
+  columna2 = columna2 - 1;
+  
   // Intercambio posiciones en la grilla
   var pieza1 = grilla[fila1][columna1];
   var pieza2 = grilla[fila2][columna2];
-
   intercambiarPosicionesGrilla(fila1, columna1, fila2, columna2);
   intercambiarPosicionesDOM('pieza' + pieza1, 'pieza' + pieza2);
-
 }
 
 
@@ -283,21 +284,24 @@ function mostrarInstruccionEnLista(instruccion, idLista) {
 Se calcula una posición aleatoria y se mueve en esa dirección. De esta forma
 se mezclará todo el tablero. */ 
 
-function mezclarPiezas(veces) {
+function mezclarPiezas(veces = 10) {
   if (veces <= 0) {
     return;
   }
   
-  var direcciones = [codigosDireccion.ABAJO, codigosDireccion.ARRIBA,
-      codigosDireccion.DERECHA, codigosDireccion.IZQUIERDA
-    ];
+  var direcciones = [
+    codigosDireccion.ABAJO,
+    codigosDireccion.ARRIBA,
+    codigosDireccion.DERECHA,
+    codigosDireccion.IZQUIERDA
+  ];
 
   var direccion = direcciones[Math.floor(Math.random() * direcciones.length)];
   moverEnDireccion(direccion);
 
   setTimeout(function() {
-      mezclarPiezas(veces - 1);
-    }, 100);
+    mezclarPiezas(veces - 1);
+  }, 10);
 }
 
 /* capturarTeclas: Esta función captura las teclas presionadas por el usuario. Javascript
