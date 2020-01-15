@@ -1,5 +1,5 @@
 // Arreglo que contiene las intrucciones del juego 
-var instrucciones = ['utilice las flechas del teclado','mueva la pieza para algun lado','intente armar la imagen de aca abajo'];
+var instrucciones = ['mueva la pieza para algun lado','intente armar la imagen de aca abajo'];
 // Arreglo para ir guardando los movimientos que se vayan realizando
 var movimientos = [];
 // Representación de la grilla. Cada número representa a una pieza.
